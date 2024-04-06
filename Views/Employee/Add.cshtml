@@ -1,0 +1,28 @@
+﻿@model EmployeeTest.Models.Employee
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div><a href="../Employee/Index">Back To List</a></div>
+<form method="post" action="AddSubmit">
+    <div class="mb-3">
+        <label asp-for="FirstName" class="form-label"></label>
+        @Html.HiddenFor(m => m.Id)
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        <label text class="form-label"></label>
+    </div>
+    <div class="mb-3">
+        <label asp-for="LastName" class="form-label"></label>
+        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+    </div>
+    <div class="mb-3">
+        <label asp-for="City" class="form-label"></label>
+        @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+    </div>
+    <div class="mb-3">
+        <label asp-for="Zip" class="form-label"></label>
+        @Html.TextBoxFor(m => m.Zip, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

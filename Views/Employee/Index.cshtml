@@ -1,0 +1,93 @@
+﻿@model List<EmployeeTest.Models.Employee>
+@{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+}
+<div> <a href="../Employee/add">Add</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>last Name</th>
+            <th>City</th>
+            <th>Zip</th>
+            <th>Create Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.Id</td>
+                <td>@employee.FirstName</td>
+                <td>@employee.LastName</td>
+                <td>@employee.City</td>
+                <td>@employee.Zip</td>
+                <td>@employee.CreatedDate.ToString("dd-MM-yyyy")</td>
+                <td><a href="../Employee/add?id=@employee.Id">Edit</a></td>
+                <td><a href="../Employee/EmpSalary?Employeeid=@employee.Id">Add Salary</a></td>
+                <td><button type="button" class="btn btn-primary btnsalary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="@employee.Id">Salary View</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Salary Date</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="modal-body">
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Function to make AJAX call and update table
+        //function loadData(employeeId) {
+            
+        //}
+        //$('#exampleModal').on('shown.bs.modal', function() {
+        //    debugger;
+        //    var employeeId = $(this).attr('data-id');
+        //    alert(employeeId);
+        //    loadData(employeeId);
+        //});
+        $('.btnsalary').click(function() {
+            var employeeId = $(this).attr('data-id')
+       $.ajax({
+                url: '/Employee/GetSalaryData?EmployeeId='+employeeId,
+                type: 'GET',
+                success: function(data) {
+                    console.log(data);
+                    $('#modal-body').empty();
+                    $.each(data, function(index, item) {
+                        var row = '<tr>' +
+                            '<td>' + item.id + '</td>' +
+                            '<td>' + item.salaryDate + '</td>' +
+                            '<td>' + item.amount + '</td>' +
+                            '</tr>';
+                        $('#modal-body').append(row);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                    
+                }
+            });
+    });
+    });
+</script>

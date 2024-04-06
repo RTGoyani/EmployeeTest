@@ -1,0 +1,21 @@
+﻿@model EmployeeTest.Models.EmployeeSalary
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div><a href="../Employee/Index">Back To List</a></div>
+<form method="post" action="SubmitSalary">
+    <div class="mb-3">
+        <label asp-for="SalaryDate" class="form-label"></label>
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.EmployeeId)
+        @Html.TextBoxFor(m => m.SalaryDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+        <label text class="form-label"></label>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Amount" class="form-label"></label>
+        @Html.TextBoxFor(m => m.Amount, "{0:N2}", new { @class = "form-control", type = "number", step = "0.01" })
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
